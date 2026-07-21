@@ -8,7 +8,7 @@ A modular, high-performance PyTorch implementation of a Decoder-only Large Langu
 
 ### 1. Tokenizer Novelty: **Hybrid Multi-Granularity (HMG) Tokenizer**
 - **Zero-Dependency Subword N-Gram Learning**: Learns frequent character n-grams directly from the corpus based on frequency and mutual information entropy without external libraries.
-- **Dual-Granularity Embedding Fusion**: In the embedding layer, token vectors combine subword token embeddings $\mathbf{E}_{\text{token}}(t)$ with 1D Convolutional sub-character composition $\text{Conv1D}(\mathbf{E}_{\text{char}}(c_1, c_2, ...))$.
+- **Dual-Granularity Embedding Fusion**: In the embedding layer, token vectors combine subword token embeddings $\mathbf{E}{\text{token}}(t)$ with 1D Convolutional sub-character composition $\text{Conv1D}(\mathbf{E}_{\text{char}}(c_1, c_2, ...))$.
 - **0 UNK Guarantee**: Full fallback down to raw characters ensures zero unknown token errors.
 
 ### 2. Architecture Novelty: **Differential Rotary Attention (Diff-RoPE Attention)**
