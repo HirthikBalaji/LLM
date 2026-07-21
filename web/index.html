@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Differential Attention LLM Playground</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Fira+Code:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo-group">
+        <div class="logo-icon">⚡</div>
+        <div>
+          <h1>Differential Attention LLM</h1>
+          <p class="subtitle">PyTorch Language Model with HMG Tokenizer & RoPE</p>
+        </div>
+      </div>
+      <div class="badges">
+        <span class="badge badge-accent" id="badge-mode">diff_llama</span>
+        <span class="badge badge-device" id="badge-device">Device: Loading...</span>
+        <span class="badge badge-params" id="badge-params">Params: Loading...</span>
+      </div>
+    </header>
+
+    <!-- Main Content Grid -->
+    <main class="main-grid">
+      <!-- Left Column: Controls & Prompt -->
+      <section class="card controls-card">
+        <h2>Input & Parameters</h2>
+
+        <div class="form-group">
+          <label for="prompt-input">Prompt Context:</label>
+          <textarea id="prompt-input" rows="5" placeholder="Type prompt here...">First Citizen:
+Before we proceed any further, hear me speak.</textarea>
+        </div>
+
+        <div class="presets">
+          <span>Presets:</span>
+          <button class="btn-preset" data-prompt="First Citizen:\nBefore we proceed any further">Shakespeare</button>
+          <button class="btn-preset" data-prompt="The gods, not the patricians, make it, and">Patricians</button>
+          <button class="btn-preset" data-prompt="MENENIUS:\nWhy, masters, my good friends">Menenius</button>
+        </div>
+
+        <div class="sliders-grid">
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="max-tokens">Max Tokens</label>
+              <span id="val-max-tokens">100</span>
+            </div>
+            <input type="range" id="max-tokens" min="10" max="300" value="100">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="temperature">Temperature</label>
+              <span id="val-temperature">0.8</span>
+            </div>
+            <input type="range" id="temperature" min="0.1" max="2.0" step="0.1" value="0.8">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="top-k">Top-K</label>
+              <span id="val-top-k">40</span>
+            </div>
+            <input type="range" id="top-k" min="1" max="100" value="40">
+          </div>
+
+          <div class="slider-group">
+            <div class="slider-header">
+              <label for="top-p">Top-P (Nucleus)</label>
+              <span id="val-top-p">0.9</span>
+            </div>
+            <input type="range" id="top-p" min="0.1" max="1.0" step="0.05" value="0.9">
+          </div>
+        </div>
+
+        <button id="btn-generate" class="btn-primary">
+          <span class="btn-text">Generate Output</span>
+          <span class="spinner hidden"></span>
+        </button>
+      </section>
+
+      <!-- Right Column: Generation Output & Architecture Info -->
+      <section class="card output-card">
+        <h2>Generated Output</h2>
+        <div id="output-box" class="output-box">
+          <span class="placeholder">Click "Generate Output" to test autoregressive completion...</span>
+        </div>
+
+        <div class="arch-inspector">
+          <h3>Architecture Highlights</h3>
+          <div class="arch-pills">
+            <div class="arch-pill">
+              <span class="pill-label">Attention</span>
+              <span class="pill-value">Differential Softmax (A1 - λ A2)</span>
+            </div>
+            <div class="arch-pill">
+              <span class="pill-label">Positioning</span>
+              <span class="pill-value">Rotary Embeddings (RoPE)</span>
+            </div>
+            <div class="arch-pill">
+              <span class="pill-label">Norm & Activation</span>
+              <span class="pill-value">RMSNorm + SwiGLU MLP</span>
+            </div>
+            <div class="arch-pill">
+              <span class="pill-label">Tokenizer</span>
+              <span class="pill-value">Hybrid Multi-Granularity (HMG)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
