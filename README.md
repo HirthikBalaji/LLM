@@ -19,7 +19,7 @@ A modular, high-performance PyTorch implementation of a Decoder-only Large Langu
 - **Rotary Position Embeddings (RoPE)**: Applied dynamically to query and key pairs for relative positioning.
 
 ### 3. Architecture Novelty: **Learnable Channel-Wise Residual Gating ($\gamma$-Gating)**
-- Dynamic channel-wise learnable gating vectors $\boldsymbol{\gamma}$ scale residual connections ($\mathbf{x} + \boldsymbol{\gamma} \odot \text{SubLayer}(\text{RMSNorm}(\mathbf{x}))$) for smooth gradient flow and depth adaptation.
+- Dynamic channel-wise learnable gating vectors $\boldsymbol{\gamma}$ scale residual connections ( $\mathbf{x} + \boldsymbol{\gamma} \odot \text{SubLayer}(\text{RMSNorm}(\mathbf{x}))$ ) for smooth gradient flow and depth adaptation.
 
 ---
 
