@@ -78,7 +78,41 @@ python3 train.py --epochs 10 --batch_size 16 --mode diff_llama --n_layer 4 --n_h
 ### 4. Generate Text via CLI
 Run autoregressive text completion with sampling controls (Temperature, Top-K, Top-P):
 ```bash
-python3 generate.py --prompt "First Citizen:\nBefore we proceed" --temperature 0.8 --top_k 40
+python3 generate.py --prompt "First Citizen:\nBefore we proceed" --max_new_tokens 150 --temperature 0.8 --top_k 40 --top_p 0.9
+```
+
+#### 📝 Sample Generation Output
+```text
+Using device: mps (Apple Silicon GPU Acceleration)
+Model Architecture: diff_llama | Parameters: 867,073
+
+--- Generating Output for Prompt: ---
+'First Citizen:
+Before we proceed'
+----------------------------------------
+
+--- Generated Result: ---
+First Citizen:
+Before we proceeds. They say MENENIUS of our but the know Caius MENENIUS:
+Why, where?
+
+First, and
+The matubs? The go you, and we'em in his vice.
+
+Second Citizen:
+Wile in of our mity
+You are tracure, you proupecitizen:
+Vers, my good relink asundone alreather where why stavervice.
+
+Second Citizen:
+Wile in can can canalreso!
+
+All:
+Consider for his vice.
+
+Second Citizen:
+We are for his n
+----------------------------------------
 ```
 
 ### 5. Evaluate Perplexity
