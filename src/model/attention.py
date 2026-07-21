@@ -38,7 +38,8 @@ class DifferentialRotaryAttention(nn.Module):
         self.lambda_k2 = nn.Parameter(torch.zeros(self.head_dim))
         self.lambda_init = config.diff_lambda_init
 
-        self.rope = RotaryEmbedding(self.head_dim, max_seq_len=config.block_size * 2)
+        self.block_size = config.block_size
+        self.rope = RotaryEmbedding(self.head_dim, max_seq_len=config.block_size * 4)
 
     def forward(
         self,
@@ -77,6 +78,10 @@ class DifferentialRotaryAttention(nn.Module):
             k1 = torch.cat([k1_prev, k1], dim=2)
             k2 = torch.cat([k2_prev, k2], dim=2)
             v = torch.cat([v_prev, v], dim=2)
+            if k1.size(2) > self.block_size:
+                k1 = k1[:, :, -self.block_size :, :]
+                k2 = k2[:, :, -self.block_size :, :]
+                v = v[:, :, -self.block_size :, :]
 
         new_kv_cache = (k1, k2, v) if use_cache else None
         T_k = k1.size(2)
@@ -130,7 +135,8 @@ class StandardMultiHeadAttention(nn.Module):
         self.attn_dropout = nn.Dropout(config.dropout)
         self.resid_dropout = nn.Dropout(config.dropout)
 
-        self.rope = RotaryEmbedding(self.head_dim, max_seq_len=config.block_size * 2)
+        self.block_size = config.block_size
+        self.rope = RotaryEmbedding(self.head_dim, max_seq_len=config.block_size * 4)
         self.use_rope = (config.mode == "llama")
 
     def forward(
@@ -156,6 +162,9 @@ class StandardMultiHeadAttention(nn.Module):
             k_prev, v_prev = kv_cache
             k = torch.cat([k_prev, k], dim=2)
             v = torch.cat([v_prev, v], dim=2)
+            if k.size(2) > self.block_size:
+                k = k[:, :, -self.block_size :, :]
+                v = v[:, :, -self.block_size :, :]
 
         new_kv_cache = (k, v) if use_cache else None
         T_k = k.size(2)
